@@ -4,6 +4,12 @@ import random
 
 @dataclass
 class Card:
+    """
+    Card class used to create instances of Cards. These objects are used in the Hand and ManageDeck class
+    and are the base class in the game.
+    Value, Color and Suit are based on the default values of a 52 card deck.
+    """
+
     value: str
     color: str
     suit: str
@@ -11,6 +17,11 @@ class Card:
 
 @dataclass
 class Hand:
+    """
+    Hand class used to create a players hard of cards. A hand contains 5 card objects. A Hand instance is created
+    by the manage deck class. Uses will use this class to discard cards from their hand, or add cards.
+    """
+
     cards: list = None
 
     def __post_init__(self):
@@ -18,6 +29,10 @@ class Hand:
             self.cards = []
 
     def add_cards(self, cards):
+        """When a hand is first generated, it is initialized with no cards.
+        The ManageDeck class then passes random cards to the Hand instance while removing them from the deck
+        """
+
         self.cards.extend(cards)
 
     def remove_card(self):
@@ -56,7 +71,8 @@ class ManageDeck:
                 color = "Black" if suit in ("Spades", "Clubs") else "Red"
                 self.cards.append(Card(value=value, color=color, suit=suit))
 
-    def remove_cards_from_deck(self):
+    def generate_first_hand(self) -> Hand:
+        # select 5 cards at random from the deck to give to the user, and to remove those cards from use
         cards_to_remove = random.sample(self.cards, k=5)
         print("we are removing the following cards")
         print(cards_to_remove)
