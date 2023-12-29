@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import random
+from typing import List
 
 
 @dataclass
@@ -35,7 +36,17 @@ class Hand:
 
         self.cards.extend(cards)
 
-    def remove_card(self):
+    def discard_cards(self, discarded_cards: str):
+        discarded_cards = discarded_cards.split(",")
+        index_to_remove = [int(card) - 1 for card in discarded_cards]
+        print(index_to_remove)
+        self.cards = [
+            card
+            for index, card in enumerate(self.cards)
+            if index not in index_to_remove
+        ]
+        print(self.cards)
+
         pass
 
 
