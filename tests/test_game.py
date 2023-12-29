@@ -33,7 +33,12 @@ def test_deck_generation():
 def test_generate_initial_hand():
     # Test generating the initial hand and validate the hand's content and the remaining deck
     # ...
-    pass
+
+    deck = ManageDeck(1)
+
+    # draw an init hand of cards
+    hand = deck.generate_first_hand()
+    assert len(hand.cards) == 5
 
 
 def test_deal_cards():
