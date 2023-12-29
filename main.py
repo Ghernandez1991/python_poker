@@ -1,4 +1,4 @@
-from game import Card, ManageDeck
+from game import Card, ManageDeck, EvaluateHand
 
 
 def main():
@@ -17,8 +17,16 @@ def main():
             "enter the card numbers you want to get rid of, seperated by a comma(1,2)\n"
         )
         # remove those cards from the hand
-        hand.discard_cards(which_cards)
-        # insert two new cards
+        count_of_removed_cards = hand.discard_cards(which_cards)
+        # Deal two new cards and remove them from the existing deck
+        new_cards = deck.deal_cards(count_of_removed_cards)
+        # card the new cards to the players hand
+        hand.add_cards(new_cards)
+        print(f"player cards are now: {hand.cards}")
+        # evaluate the player hand
+        evaluator = EvaluateHand(hand)
+        print(evaluator.check_one_pair())
+
     else:
         # evaluate cards
         pass

@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 import random
 from typing import List
+from collections import defaultdict
 
 
 @dataclass
@@ -36,7 +37,7 @@ class Hand:
 
         self.cards.extend(cards)
 
-    def discard_cards(self, discarded_cards: str):
+    def discard_cards(self, discarded_cards: str) -> int:
         discarded_cards = discarded_cards.split(",")
         index_to_remove = [int(card) - 1 for card in discarded_cards]
         print(index_to_remove)
@@ -47,7 +48,7 @@ class Hand:
         ]
         print(self.cards)
 
-        pass
+        return len(discarded_cards)
 
 
 @dataclass
@@ -124,5 +125,59 @@ class ManageDeck:
 
         return player_hand
 
-    def deal_cards(self):
-        pass
+    def deal_cards(self, number_of_cards: int):
+        # get a random sample of cards from the exiting cards in the deck
+        cards_to_remove = random.sample(self.cards, k=number_of_cards)
+        print("we are removing the following cards from the deck and giving to player")
+        print(cards_to_remove)
+        indexes_to_remove = []
+        # remove those cards from the deck
+        for outter_card in cards_to_remove:
+            print(
+                f"outter card is {outter_card.value} of {outter_card.suit} ({outter_card.color})"
+            )
+            for index, inner_card in enumerate(self.cards):
+                print(
+                    f"inner card is {inner_card.value} of {inner_card.suit} ({inner_card.color})"
+                )
+                if (
+                    inner_card.value == outter_card.value
+                    and inner_card.color == outter_card.color
+                    and inner_card.suit == outter_card.suit
+                ):
+                    print("found a match")
+                    indexes_to_remove.append(index)
+                else:
+                    continue
+        print(indexes_to_remove)
+        # use list comprehension to only get cards that are not in the indexes we are removing
+        self.cards = [
+            elem
+            for index, elem in enumerate(self.cards)
+            if index not in indexes_to_remove
+        ]
+
+        print(f"the deck now has {len(self.cards)} cards left")
+        for card in self.cards:
+            print(f"{card.value} of {card.suit} ({card.color})")
+
+        print(f"cards going to the player are {cards_to_remove}")
+
+        return cards_to_remove
+
+
+class EvaluateHand:
+    def __init__(self, hand) -> None:
+        self.hand = hand
+
+    def check_one_pair(self):
+        value_counts = defaultdict(int)
+        for card in self.hand.cards:
+            value_counts[card.value] += 1
+
+        # Check for a pair
+        for value, count in value_counts.items():
+            if count == 2:
+                return f"Pair of {value}s found"
+
+        return "No pair found"
