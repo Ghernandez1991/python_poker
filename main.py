@@ -1,4 +1,4 @@
-from game import Card, ManageDeck, EvaluateHand
+from game.game import Card, ManageDeck, EvaluateHand
 
 
 def main():
