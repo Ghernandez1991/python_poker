@@ -1,5 +1,7 @@
 poker/
 __pycache__
 .pytest_cache   
-tests/__pycache__
+tests/__pycache__/
+game/__pycache__/
+
 

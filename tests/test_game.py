@@ -27,7 +27,11 @@ def test_hand_initialization():
 def test_deck_generation():
     # Test generation of the deck and validate the number of cards
     # ...
-    pass
+    deck = ManageDeck(1)
+    assert len(deck.cards) == 52
+
+    deck2 = ManageDeck(5)
+    assert deck2.required_cards == 260
 
 
 def test_generate_initial_hand():
@@ -41,10 +45,19 @@ def test_generate_initial_hand():
     assert len(hand.cards) == 5
 
 
-def test_deal_cards():
+def test_discard_cards():
     # Test dealing cards and check if the deck and dealt cards are updated correctly
     # ...
-    pass
+    deck = ManageDeck(1)
+
+    # draw an init hand of cards
+    hand = deck.generate_first_hand()
+    removal_string = "1,2,3"
+    # remove those cards from the hand
+    count_of_removed_cards = hand.discard_cards(removal_string)
+
+    assert len(hand.cards) == 2
+    assert count_of_removed_cards == 3
 
 
 # Test EvaluateHand class

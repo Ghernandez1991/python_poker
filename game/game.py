@@ -73,6 +73,7 @@ class ManageDeck:
             "Queen",
             "King",
         }
+        # TODO update logic when we have multiple decks of cards
         self.required_cards = self.number_of_decks * 52
         self.cards = []
         self.generate_deck()

@@ -31,6 +31,8 @@ def main():
         # evaluate cards
         pass
 
+    print("testing build and test run")
+
     input("Press Enter to exit...")
 
 
